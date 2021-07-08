@@ -17,6 +17,11 @@ const config = {
       '@pages': path.resolve(__dirname, 'pages'),
       '@utils': path.resolve(__dirname, 'utils'),
       '@typings': path.resolve(__dirname, 'typings'),
+      '@actions': path.resolve(__dirname, 'actions'),
+      '@apis': path.resolve(__dirname, 'apis'),
+      '@reducers': path.resolve(__dirname, 'reducers'),
+      '@stores': path.resolve(__dirname, 'stores'),
+      '@hoc': path.resolve(__dirname, 'hoc'),
     },
   },
   entry: {
@@ -62,6 +67,12 @@ const config = {
     historyApiFallback: true,
     port: 3000,
     publicPath: '/dist/',
+    proxy: {
+      '/api/': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    },
   },
 };
 
