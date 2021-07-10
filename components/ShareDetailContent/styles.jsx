@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 export const Content = styled.div`
   margin-top: 100px;
   display: flex;
+  flex-direction: row;
   padding-bottom: 25px;
   height: auto;
 `;
@@ -24,6 +25,7 @@ export const ContentLeft = styled.div`
 
 export const ContentRight = styled.div`
   margin-left: 100px;
+  width: 100%;
   text-align: right;
 `;
 
@@ -50,11 +52,10 @@ export const ContentText = styled.div`
   margin-top: 35px;
   font-size: 17px;
   line-height: 27px;
-  text-align: left;
+
   & div {
     color: #0f4c81;
     padding-top: 30px;
-    text-align: right;
   }
 `;
 

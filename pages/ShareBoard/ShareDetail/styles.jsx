@@ -9,11 +9,12 @@ export const Container = styled.div`
   padding-bottom: 300px;
 `;
 
-export const Title = styled.h2`
+export const Title = styled.h4`
   padding: 50px 30px;
   padding-bottom: 30px;
   border-bottom: 1px solid rgba(147, 149, 151, 0.8);
   margin-bottom: 30px;
+  font-weight: bold;
 `;
 
 export const Content = styled.div`

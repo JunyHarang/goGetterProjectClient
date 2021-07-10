@@ -1,143 +1,97 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
-import {
-  Container,
-  MyContainer,
-  MySearch,
-  BookRecord,
-  MyHeader,
-  Wrapper,
-  Ul,
-  Li,
-  Button,
-} from '@pages/MyBookRecord/styles';
-import { Link } from 'react-router-dom';
+import { Container, Title, Content, PopularCards, SharedCards, Button } from '@pages/ShareBoard/styles';
+import Cards from '@components/Cards';
+import { Row } from 'antd';
+import axios from 'axios';
+import Paging from '@components/Paging';
+import { withRouter } from 'react-router';
+import { useSelector } from 'react-redux';
 
-const MyBookRecord = () => {
-  const url =
-    'https://an2-img.amz.wtchn.net/image/v2/4145ef23e4454d900b0860f915490911.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKaVlXTnJaM0p2ZFc1a0lqcDdJbklpT2pJMU5Td2laeUk2TWpVMUxDSmlJam95TlRWOUxDSmpjbTl3SWpwMGNuVmxMQ0pvWldsbmFIUWlPamN3TUN3aWNHRjBhQ0k2SWk5Mk1TOWhjbTh5WTNWa2IyZHpjekExWlhKeWMyTndjeUlzSW5GMVlXeHBkSGtpT2pnd0xDSjNhV1IwYUNJNk5Ea3dmUS5QNTBzb0dkTW1mV05kWmhwXzVKSnU4RVdNeVdNTG1ZdldFVjREaVVkRVd3';
+const MyBookRecord = (props) => {
+  const state = useSelector((state) => state.auth);
+  const userId = state.user.user_id;
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+  const [sharedBoards, setSharedBoards] = useState([]);
+
+  useEffect(() => {
+    handlePageChange(currentPage);
+  }, []);
+
+  const handlePageChange = (page) => {
+    axios
+      .get(`/api/bkusers/book-reports/${userId}`, {
+        withCredentials: true,
+        params: {
+          page: page - 1,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data);
+        setSharedBoards(res.data.data.content);
+        // console.log(page);
+
+        const pagination = res.data.pagination;
+        const { total_pages, total_elements, current_page, current_elements } = pagination;
+        setTotalElements(total_elements);
+        setCurrentPage(current_page);
+        window.scrollTo(0, 0);
+      })
+      .catch((err) => {
+        console.dir(err);
+      });
+  };
+
+  const onClickEdit = useCallback(() => {
+    props.history.push('/mybookrecord/write');
+  }, []);
+
+  // if (!sharedBoards.length || !popularSharedBoards.length) {
+  //   return <div>loading...</div>;
+  // }
 
   return (
-    <div id="discussion" style={{ height: '100%' }}>
-      <MyContainer>
+    <div style={{ height: '100%' }}>
+      <Container>
         <Header />
-        <Container>
-          <MyHeader>나의 독서 기록</MyHeader>
-          <BookRecord>
-            <MySearch>
-              <i class="fas fa-search"></i>
-              <input placeholder="글제목으로 검색."></input>
-            </MySearch>
-            <Wrapper>
-              <Ul>
-                <Li>
-                  <Link to="/mybookrecord/content">
-                    <div className="imgDiv">
-                      <img src={url}></img>
-                    </div>
-                  </Link>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-              </Ul>
-            </Wrapper>
-            <Wrapper>
-              <Ul>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-                <Li>
-                  <div className="imgDiv">
-                    <img src={url}></img>
-                  </div>
-                  <div className="title">예술하는 습관을 읽고</div>
-                  <div className="bookTitle">예술하는 습관</div>
-                  <div className="date">21-06-24</div>
-                  <div className="tag">#예술 #코코샤넬</div>
-                </Li>
-              </Ul>
-            </Wrapper>
-            <Link to="/mybookrecord/write">
-              <Button type="submit">작성하기</Button>
-            </Link>
-          </BookRecord>
-        </Container>
-      </MyContainer>
+        <Title>기록 게시판</Title>
+        <Content>
+          <h4>나의 게시물</h4>
+          <SharedCards>
+            <Row gutter={[16, 32]}>
+              {sharedBoards &&
+                sharedBoards.map((board, index) => (
+                  <React.Fragment key={index}>
+                    <Cards
+                      title={board.title}
+                      createdBoard={board.create_at}
+                      boardId={board.book_report_id}
+                      bookTitle={board.book_name}
+                      bookTag={board.book_report_tag}
+                    />
+                  </React.Fragment>
+                ))}
+            </Row>
+          </SharedCards>
+        </Content>
+        <div style={{ marginBottom: '50px' }}>
+          <Button onClick={onClickEdit}>작성하기</Button>
+        </div>
+        <div style={{ marginLeft: '150px' }}>
+          <Paging
+            bookBoard={true}
+            totalElements={totalElements}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
+        </div>
+      </Container>
       <Footer />
     </div>
   );
 };
 
-export default MyBookRecord;
+export default withRouter(MyBookRecord);

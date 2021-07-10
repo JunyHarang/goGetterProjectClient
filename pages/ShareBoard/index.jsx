@@ -6,8 +6,11 @@ import Cards from '@components/Cards';
 import CardsPopular from '@components/CardsPopular';
 import { Row } from 'antd';
 import axios from 'axios';
+import Paging from '@components/Paging';
 
 const ShareBoard = (props) => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
   const [sharedBoards, setSharedBoards] = useState([]);
   const [popularSharedBoards, setPopularSharedBoards] = useState([]);
 
@@ -23,20 +26,53 @@ const ShareBoard = (props) => {
       .catch((err) => {
         console.dir(err);
       });
+
+    handlePageChange(currentPage);
+
+    // axios
+    //   .get('/api/sharings', {
+    //     withCredentials: true,
+    //     params: {
+    //       page: currentPage,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     setSharedBoards(res.data.data);
+
+    //     const pagination = res.data.pagination;
+    //     const { total_pages, total_elements, current_page, current_elements } = pagination;
+    //     setTotalElements(total_elements);
+    //     setCurrentPage(currentPage);
+    //   })
+    //   .catch((err) => {
+    //     console.dir(err);
+    //   });
   }, []);
 
-  useEffect(() => {
+  const handlePageChange = (page) => {
     axios
       .get('/api/sharings', {
         withCredentials: true,
+        params: {
+          page: page - 1,
+        },
       })
       .then((res) => {
+        console.log(res.data);
         setSharedBoards(res.data.data);
+        // console.log(page);
+
+        const pagination = res.data.pagination;
+        const { total_pages, total_elements, current_page, current_elements } = pagination;
+        setTotalElements(total_elements);
+        setCurrentPage(current_page);
+        window.scrollTo(0, 0);
       })
       .catch((err) => {
         console.dir(err);
       });
-  }, []);
+  };
 
   const onClickEdit = useCallback(() => {
     props.history.push('/shareboard/write');
@@ -65,6 +101,7 @@ const ShareBoard = (props) => {
                       boardId={board.id}
                       likeCnt={board.like_cnt}
                       bookTitle={board.book_title}
+                      // writerId={board.writer_info.writer_id}
                     />
                   </React.Fragment>
                 ))}
@@ -77,19 +114,29 @@ const ShareBoard = (props) => {
                 sharedBoards.map((board, index) => (
                   <React.Fragment key={index}>
                     <Cards
+                      share
                       title={board.title}
                       createdBoard={board.created_at}
                       boardId={board.id}
                       likeCnt={board.like_cnt}
                       bookTitle={board.book_title}
+                      // writerId={board.writer_info.writer_id}
                     />
                   </React.Fragment>
                 ))}
             </Row>
           </SharedCards>
         </Content>
-        <div>
+        <div style={{ marginBottom: '50px' }}>
           <Button onClick={onClickEdit}>작성하기</Button>
+        </div>
+        <div style={{ marginLeft: '150px' }}>
+          <Paging
+            bookBoard={true}
+            totalElements={totalElements}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
         </div>
       </Container>
       <Footer />

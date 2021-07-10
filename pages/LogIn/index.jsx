@@ -94,7 +94,7 @@ const LogIn = (props) => {
           </Login>
           <Search>
             <span>
-              <Link to="/">아이디 찾기</Link>|<Link to="/">비밀번호 찾기</Link>
+              <Link to="/">아이디 찾기</Link> | <Link to="/">비밀번호 찾기</Link>
             </span>
           </Search>
           <Social>

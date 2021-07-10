@@ -40,7 +40,7 @@ const Reply = ({ discussionId }) => {
         content: content,
       })
       .then((res) => {
-        console.log(res);
+        window.location.reload();
       })
       .catch((err) => {
         console.dir(err);

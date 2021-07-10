@@ -8,11 +8,11 @@ const Tab = () => {
       <h2>마이 페이지</h2>
       <ul>
         <Link to="/mypage/profile">
-          <li>프로필</li>
+          <li className="select">프로필</li>
         </Link>
-        <Link to="/mypage/note">
+        {/* <Link to="/mypage/note">
           <li>쪽지함</li>
-        </Link>
+        </Link> */}
       </ul>
     </TabDiv>
   );

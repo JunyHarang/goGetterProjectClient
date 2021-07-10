@@ -25,6 +25,7 @@ export const ContentLeft = styled.div`
 
 export const ContentRight = styled.div`
   margin-left: 100px;
+  width: 100%;
   text-align: right;
 `;
 

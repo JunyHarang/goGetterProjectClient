@@ -28,7 +28,7 @@ export const DCSearch = styled.div`
     position: absolute;
     font-size: 16px;
     color: #0f4c81;
-    top: 240px;
+    top: 248px;
     right: 5px;
     z-index: 2;
     cursor: pointer;
@@ -59,6 +59,7 @@ export const DCTable = styled.table`
 export const DCTitle = styled.thead`
   border: 0px;
   border-bottom: 1px solid #0f4c81;
+  text-align: center;
   & th {
     border: 0px;
     padding: 5px;

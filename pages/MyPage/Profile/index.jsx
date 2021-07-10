@@ -37,7 +37,9 @@ const MyPageProfile = () => {
                   휴대폰
                   <span>01000000000</span>
                 </CantModified>
-                <ProfileImage>프로필 사진</ProfileImage>
+                <ProfileImage>
+                  <i className="fas fa-user-circle fa-8x"></i>
+                </ProfileImage>
               </Profile>
               <ProfileForm>
                 <FormGroup>

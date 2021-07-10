@@ -22,6 +22,7 @@ import CheckModal from '@components/Modal/Check';
 const DCContent = (props) => {
   const users = useSelector((state) => state.auth.user);
   const currentId = users.user_id;
+  const read_hit = props.location.state.read_hit;
   const { id } = props.match.params;
   const [Id, setId] = useState('');
   const [title, setTitle] = useState('');
@@ -65,7 +66,7 @@ const DCContent = (props) => {
               <SubMetaLeft>
                 <span className="date">{date}</span>|
                 <span className="count">
-                  조회수 <span className="countNo">10</span>
+                  조회수 <span className="countNo">{read_hit}</span>
                 </span>
               </SubMetaLeft>
               <SubMetaRight>

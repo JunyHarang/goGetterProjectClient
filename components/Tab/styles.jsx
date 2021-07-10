@@ -40,7 +40,7 @@ export const TabDiv = styled.div`
     font-size: 18px;
   }
 
-  & li:hover {
+  & li.select {
     background-color: #778fa8;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;

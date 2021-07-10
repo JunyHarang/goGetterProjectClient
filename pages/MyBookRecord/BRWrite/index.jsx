@@ -3,6 +3,7 @@ import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
 import RecordWriteForm from '@components/RecordWriteForm';
 import { Container, BRContainer } from '@pages/MyBookRecord/BRWrite/styles';
+import { withRouter } from 'react-router';
 
 const BRWrite = () => {
   return (
@@ -18,4 +19,4 @@ const BRWrite = () => {
   );
 };
 
-export default BRWrite;
+export default withRouter(BRWrite);

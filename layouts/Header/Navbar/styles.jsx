@@ -43,4 +43,17 @@ export const LinkClicked = styled.div`
   :hover {
     color: #0f4c81;
   }
+
+  & i {
+    color: #939597;
+  }
+
+  & i > span {
+    font-size: 5px;
+    position: absolute;
+    top: 18px;
+    right: -1px;
+    z-index: 2;
+    color: #0f4c81;
+  }
 `;

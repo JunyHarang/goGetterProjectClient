@@ -1,16 +1,14 @@
 import React from 'react';
 import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
-import Tab from '@components/Tab';
-import { Container, AllDiv, ContentDiv } from '@pages/MyPage/Note/styles';
+import { Container, AllDiv, ContentDiv } from '@pages/Note/styles';
 
-const MyPageNote = () => {
+const Note = () => {
   return (
     <div style={{ height: '100%' }}>
       <Container>
         <Header />
         <AllDiv>
-          <Tab />
           <ContentDiv></ContentDiv>
         </AllDiv>
       </Container>
@@ -19,4 +17,4 @@ const MyPageNote = () => {
   );
 };
 
-export default MyPageNote;
+export default Note;

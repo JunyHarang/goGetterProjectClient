@@ -8,12 +8,12 @@ export const Container = styled.div`
   left: 50%;
   transform: translateX(-50%);
   margin-bottom: 100px;
+  padding-bottom: 300px;
 `;
 
 export const BookRecord = styled.div`
   height: auto;
   min-height: 100%;
-  padding-bottom: 300px;
 `;
 
 export const MyHeader = styled.h2`

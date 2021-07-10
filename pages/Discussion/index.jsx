@@ -144,7 +144,7 @@ const DCItem = ({ item }) => {
       <td>{id}</td>
 
       <td className="title">
-        <Link to={{ pathname: `/discussion/content/${id}` }}>{title} </Link>
+        <Link to={{ pathname: `/discussion/content/${id}`, state: { read_hit: read_hit } }}>{title} </Link>
       </td>
       <td>{read_hit}</td>
       <td>{user_nickname}</td>

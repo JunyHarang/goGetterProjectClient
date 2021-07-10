@@ -5,7 +5,7 @@ import { Col } from 'antd';
 import 'antd/dist/antd.css';
 
 const Cards = (props) => {
-  console.log(props);
+  // console.log(props);
   return (
     <Col span={6}>
       <Container>
