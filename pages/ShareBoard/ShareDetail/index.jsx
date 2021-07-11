@@ -3,16 +3,25 @@ import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
 import { Container, Title, Content } from '@pages/ShareBoard/ShareDetail/styles';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import { Redirect, useParams, withRouter } from 'react-router';
 import ShareDetailContent from '@components/ShareDetailContent';
 import ShareBoardReply from '@components/ShareBoardReply';
+import EditModal from '@components/Modal/ShareEdit';
+import DeleteModal from '@components/Modal/ShareDelete';
+import useInput from '@hooks/useInput';
 
 const ShareDetail = (props) => {
   const { boardId } = useParams();
-  const [post, setPost] = useState([]);
+  const [post, onChangePost, setPost] = useInput([]);
   const [reply, setReply] = useState([]);
   const [writerId, setWriterId] = useState('');
   const [writerNickName, setWriterNickName] = useState('');
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const [successEdit, setSuccessEdit] = useState(false);
+  const [successDelete, setSuccessDelete] = useState(false);
 
   useEffect(() => {
     axios
@@ -43,8 +52,36 @@ const ShareDetail = (props) => {
     return <div>Loading...</div>;
   }
 
+  if (successEdit) {
+    setEditModalOpen(false);
+    props.history.push(`/shareboard/detail/${boardId}`);
+    window.location.reload();
+    setSuccessEdit(false);
+  }
+
+  if (successDelete) {
+    setDeleteModalOpen(false);
+    props.history.push('/shareboard');
+    window.location.reload();
+    setSuccessDelete(false);
+  }
+
   return (
     <div style={{ height: '100%' }}>
+      <EditModal
+        boardId={boardId}
+        post={post}
+        editModalOpen={editModalOpen}
+        setEditModalOpen={setEditModalOpen}
+        setSuccessEdit={setSuccessEdit}
+      />
+      <DeleteModal
+        deleteModalOpen={deleteModalOpen}
+        setDeleteModalOpen={setDeleteModalOpen}
+        boardId={boardId}
+        setSuccessDelete={setSuccessDelete}
+        userId={writerId}
+      />
       <Container>
         <Header />
         <Title>{writerNickName}님의 게시물</Title>
@@ -56,6 +93,9 @@ const ShareDetail = (props) => {
             create={post.created_at}
             like={post.like_cnt}
             writerId={writerId}
+            tag={post.tag_content}
+            setEditModalOpen={setEditModalOpen}
+            setDeleteModalOpen={setDeleteModalOpen}
           />
           <ShareBoardReply
             boardId={boardId}
@@ -71,4 +111,4 @@ const ShareDetail = (props) => {
   );
 };
 
-export default ShareDetail;
+export default withRouter(ShareDetail);

@@ -15,11 +15,17 @@ export const Title = styled.div`
 export const Content = styled.div``;
 
 export const BookTitle = styled.p`
-  margin-bottom: 1px;
+  margin: 0px;
+  font-size: 16px;
+`;
+
+export const NickName = styled.p`
+  margin: 0px;
+  font-size: 16px;
 `;
 
 export const DateTime = styled.p`
-  margin-bottom: 5px;
+  margin: 0px;
 `;
 
 export const Tag = styled.p`

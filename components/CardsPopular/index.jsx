@@ -1,11 +1,23 @@
 import React from 'react';
-import { Container, Title, Content, BookTitle, DateTime, Detail, Tag } from '@components/Cards/styles';
+import { Container, Title, Content, BookTitle, DateTime, NickName, Tag } from '@components/Cards/styles';
 import { Link, Redirect } from 'react-router-dom';
 import { Col } from 'antd';
 import 'antd/dist/antd.css';
 
 const Cards = (props) => {
   // console.log(props);
+
+  let title = props.title,
+    bookTitle = props.bookTitle;
+
+  if (title.length > 13) {
+    title = title.slice(0, 10) + '...';
+  }
+
+  if (bookTitle.length > 13) {
+    bookTitle = bookTitle.slice(0, 10) + '...';
+  }
+
   return (
     <Col span={6}>
       <Container>
@@ -21,11 +33,12 @@ const Cards = (props) => {
               alt=""
             />
             <div class="card-body" style={{ textAlign: 'right' }}>
-              <Title>{props.title.slice(0, 10) + '...'}</Title>
+              <Title>{title}</Title>
               <Content>
-                <BookTitle>{props.bookTitle ? props.bookTitle : '책 제목 없음'}</BookTitle>
+                <BookTitle>{bookTitle}</BookTitle>
+                <NickName>{props.writerNickName}</NickName>
                 <DateTime>{props.createdBoard}</DateTime>
-                <Tag>태그</Tag>
+                <Tag>{props.bookTag}</Tag>
               </Content>
               {/* <Link to="/shareboard/detail">
               <Detail>자세히</Detail>

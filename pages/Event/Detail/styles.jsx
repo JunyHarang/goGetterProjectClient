@@ -13,6 +13,29 @@ export const Container = styled.div`
   transform: translateX(-50%);
   margin-bottom: 100px;
 `;
+export const Contents = styled.div`
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+`;
+export const ListButton = styled.div`
+  text-align: center;
+
+  & button {
+    border: 1px solid #0f4c81;
+    background-color: white;
+    width: 144px;
+    height: 42px;
+    color: #0f4c81;
+    cursor: pointer;
+  }
+
+  & button > a {
+    text-decoration: none;
+    color: #0f4c81;
+  }
+`;
 
 export const EventHeader = styled.h3`
   padding: 50px 30px;

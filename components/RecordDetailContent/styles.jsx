@@ -52,11 +52,9 @@ export const ContentText = styled.div`
   margin-top: 35px;
   font-size: 17px;
   line-height: 27px;
-  text-align: left;
   & div {
     color: #0f4c81;
     padding-top: 30px;
-    text-align: right;
   }
 `;
 

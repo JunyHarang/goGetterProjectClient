@@ -3,6 +3,7 @@ import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
 import ShareBoardWriteForm from '@components/ShareBoardWriteForm';
 import { Container, BRContainer } from '@pages/MyBookRecord/BRWrite/styles';
+import { withRouter } from 'react-router';
 
 const Write = () => {
   return (
@@ -18,4 +19,4 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default withRouter(Write);

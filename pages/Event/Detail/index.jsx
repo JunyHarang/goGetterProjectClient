@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
-import { EventContainer, Container, EventHeader, EventTab, TabArea, EventList } from '@pages/Event/Detail/styles';
+import {
+  Contents,
+  EventContainer,
+  Container,
+  EventHeader,
+  EventTab,
+  TabArea,
+  EventList,
+  ListButton,
+} from '@pages/Event/Detail/styles';
 import Paging from '@components/Paging';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -38,12 +47,17 @@ const EventDetail = (props) => {
         <Header />
         <Container>
           <EventHeader>이벤트</EventHeader>
-          <EventTab></EventTab>
-          <TabArea></TabArea>
-          <h3>{title}</h3>
-          {content}
-          <br></br>
-          {startDate}~{endDate}
+          <Contents>
+            <h3>{title}</h3>
+            {content}
+            <br></br>
+            {startDate}~{endDate}
+          </Contents>
+          <ListButton>
+            <Link to="/event/now">
+              <button>목록</button>
+            </Link>
+          </ListButton>
         </Container>
       </EventContainer>
       <Paging></Paging>

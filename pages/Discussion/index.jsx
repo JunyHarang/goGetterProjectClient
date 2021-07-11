@@ -15,7 +15,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Paging from '@components/Paging';
 import useInput from '@hooks/useInput';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 const Discussion = () => {
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const [post, setPost] = useState();
   const [totalElements, setTotalElements] = useState();
   const [currentPage, setCurrentPage] = useState(0);
@@ -114,7 +118,7 @@ const Discussion = () => {
             </DCTitle>
             <DCMain>
               {post?.map((item, idx) => {
-                return <DCItem key={idx} item={item} />;
+                return <DCItem key={idx} item={item} isLoggedIn={isLoggedIn} />;
               })}
             </DCMain>
           </DCTable>
@@ -137,15 +141,20 @@ const Discussion = () => {
 
 export default Discussion;
 
-const DCItem = ({ item }) => {
+const DCItem = ({ item, isLoggedIn }) => {
   const { id, title, user_nickname, create_at, read_hit } = item;
   return (
     <tr>
       <td>{id}</td>
-
-      <td className="title">
-        <Link to={{ pathname: `/discussion/content/${id}`, state: { read_hit: read_hit } }}>{title} </Link>
-      </td>
+      {isLoggedIn ? (
+        <td className="title">
+          <Link to={{ pathname: `/discussion/content/${id}`, state: { read_hit: read_hit } }}>{title} </Link>
+        </td>
+      ) : (
+        <td className="title">
+          <Link to="/login">{title}</Link>
+        </td>
+      )}
       <td>{read_hit}</td>
       <td>{user_nickname}</td>
       <td>{create_at}</td>

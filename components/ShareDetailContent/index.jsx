@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Content,
   ContentLeft,
@@ -9,8 +9,10 @@ import {
   ContentEdit,
 } from '@components/ShareDetailContent/styles';
 import { useSelector } from 'react-redux';
+import { useParams, withRouter } from 'react-router';
 
 const ShareDetailContent = (props) => {
+  const { boardId } = useParams();
   const state = useSelector((state) => state.auth);
   let userId = -1;
 
@@ -18,6 +20,16 @@ const ShareDetailContent = (props) => {
     userId = state.user.user_id;
   }
   // console.log(props);
+
+  const onClickEditBtn = useCallback((e) => {
+    e.preventDefault();
+    props.setEditModalOpen(true);
+  }, []);
+
+  const onClickDeleteBtn = useCallback((e) => {
+    e.preventDefault();
+    props.setDeleteModalOpen(true);
+  }, []);
 
   return (
     <div>
@@ -39,8 +51,12 @@ const ShareDetailContent = (props) => {
           </ContentText>
           {props.writerId === userId && (
             <ContentEdit>
-              <button className="edit">수정하기</button>
-              <button className="delete">삭제하기</button>
+              <button className="edit" onClick={onClickEditBtn}>
+                수정하기
+              </button>
+              <button className="delete" onClick={onClickDeleteBtn}>
+                삭제하기
+              </button>
             </ContentEdit>
           )}
         </ContentRight>
@@ -49,4 +65,4 @@ const ShareDetailContent = (props) => {
   );
 };
 
-export default ShareDetailContent;
+export default withRouter(ShareDetailContent);

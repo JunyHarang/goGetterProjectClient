@@ -7,6 +7,7 @@ import CardsPopular from '@components/CardsPopular';
 import { Row } from 'antd';
 import axios from 'axios';
 import Paging from '@components/Paging';
+import { withRouter } from 'react-router';
 
 const ShareBoard = (props) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -59,7 +60,7 @@ const ShareBoard = (props) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setSharedBoards(res.data.data);
         // console.log(page);
 
@@ -101,7 +102,8 @@ const ShareBoard = (props) => {
                       boardId={board.id}
                       likeCnt={board.like_cnt}
                       bookTitle={board.book_title}
-                      // writerId={board.writer_info.writer_id}
+                      writerNickName={board.writer_info.nick_name}
+                      bookTag={board.tag_content}
                     />
                   </React.Fragment>
                 ))}
@@ -120,7 +122,8 @@ const ShareBoard = (props) => {
                       boardId={board.id}
                       likeCnt={board.like_cnt}
                       bookTitle={board.book_title}
-                      // writerId={board.writer_info.writer_id}
+                      writerNickName={board.writer_info.nick_name}
+                      bookTag={board.tag_content}
                     />
                   </React.Fragment>
                 ))}
@@ -144,4 +147,4 @@ const ShareBoard = (props) => {
   );
 };
 
-export default ShareBoard;
+export default withRouter(ShareBoard);

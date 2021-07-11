@@ -6,7 +6,7 @@ import { logout } from '@actions/auth';
 import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
   const pathname = window.location.pathname;
 
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const Navbar = () => {
               <Link to="/">로그아웃</Link>
             </li>
             <li>
-              <Link to="/mypage/profile">
+              <Link to={`/mypage/profile/${user.user_id}`}>
                 <LinkClicked isActive={pathname.includes('/mypage')}>
                   <i class="fas fa-user-circle fa-lg"></i>
                 </LinkClicked>
