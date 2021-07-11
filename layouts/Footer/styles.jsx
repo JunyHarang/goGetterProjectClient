@@ -22,7 +22,7 @@ export const FooterHeadWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   height: 50px;
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 `;
 
 export const SocialLinks = styled.div`

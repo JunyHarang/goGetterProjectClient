@@ -14,6 +14,10 @@ import {
 // import { Copyright } from '@material-ui/icons';
 
 const Footer = () => {
+  const onClickFooterLink = () => {
+    alert('준비중입니다.');
+  };
+
   return (
     <FooterWrapper>
       <FooterFixed>
@@ -39,12 +43,13 @@ const Footer = () => {
             <i class="fab fa-youtube fa-2x"></i>
           </SocialLinks>
         </FooterHeadWrapper>
-        <CompanyName>주식회사 Go-Getter</CompanyName>
+        <img style={{ width: '60px' }} src="/images/gogetter.jpg" alt="" />
+        <CompanyName>비트캠프 3차 파이널 프로젝트</CompanyName>
         <CopyRights>
-          <CopyRight>팀장: 변현우 | 전화번호: 010-1234-5678</CopyRight>
-          <CopyRight>주소: 대한민국 서울특별시 강남구 000-000, 센트로폴리스 A동 20층 우편번호 123456</CopyRight>
-          <CopyRight>사업자등록번호: 123-45-678910</CopyRight>
-          <CopyRight>클라우드 호스팅: Amazon Web Services Inc.</CopyRight>
+          <CopyRight style={{ fontSize: '16px' }}>홍세준, 박준환</CopyRight>
+          {/* <CopyRight>우도독</CopyRight> */}
+          {/* <CopyRight>사업자등록번호: 123-45-678910</CopyRight>
+          <CopyRight>클라우드 호스팅: Amazon Web Services Inc.</CopyRight> */}
         </CopyRights>
       </FooterFixed>
     </FooterWrapper>
