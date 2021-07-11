@@ -78,13 +78,6 @@ const Navbar = () => {
                 </LinkClicked>
               </Link>
             </li>
-            <li>
-              <Link to="/note">
-                <LinkClicked isActive={pathname.includes('/note')}>
-                  <i class="far fa-bell fa-lg">{/* <span>●</span> */}</i>
-                </LinkClicked>
-              </Link>
-            </li>
           </ul>
         )}
       </Inner>
