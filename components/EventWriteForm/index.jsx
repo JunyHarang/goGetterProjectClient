@@ -1,16 +1,17 @@
-import React, { useState, useCallback } from 'react';
-import { Container, Form, WriteHeader, Input, TextArea, Button } from '@components/EventWriteForm/styles';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Container, Form, WriteHeader, Input, TextArea, Button, SelectBox } from '@components/EventWriteForm/styles';
 import useInput from '@hooks/useInput';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale';
 import 'react-datepicker/dist/react-datepicker.css';
+import apiController from '@apis/apiController';
 
-const EventWriteForm = () => {
+const EventWriteForm = ({ setSuccessWrite }) => {
   const users = useSelector((state) => state.auth.user);
-
+  const history = useHistory();
   const DateInput = ({ value, onClick }) => (
     <button className="date-input" onClick={onClick}>
       {value}
@@ -20,28 +21,60 @@ const EventWriteForm = () => {
   const [startDate, endDate] = dateRange;
   const [title, onChangeTitle] = useInput('');
   const [content, onChangeContent] = useInput('');
-  const [coupon_id, setCoupon_Id] = useInput('');
   const [img_url, setImg_Url] = useInput('');
-  // const [startDate, setStartDate] = useState(new Date());
-  // const [endDate, setEndDate] = useState(new Date());
+  const [post, setPost] = useState();
+  const [select, setSelect] = useState();
+  const [coupon_id, setCoupon_Id] = useState();
 
-  const onSubmit = (e) => {
-    console.log(users.user_id);
-    axios
-      .post(`/api/admin/events`, {
-        content,
-        title,
-        img_url,
-        start_date: dateRange[0],
-        end_date: dateRange[1],
-      })
+  useEffect(() => {
+    apiController({
+      url: `/admin/events/coupons`,
+      method: 'get',
+    })
       .then((res) => {
-        console.log(res);
+        setPost(res.data.data);
       })
       .catch((err) => {
         console.dir(err);
       });
+  }, []);
+
+  const onSubmit = (e) => {
+    console.log(users.user_id);
+    if (!title.length || !title.trim().length) {
+      alert('제목을 작성해주세요.');
+    } else if (!content.length || !content.trim().length) {
+      alert('내용을 작성해주세요.');
+    } else {
+      let params = {
+        content,
+        title,
+        img_url,
+        coupon_id,
+        start_date: dateRange[0],
+        end_date: dateRange[1],
+      };
+      apiController({
+        url: `/admin/events`,
+        method: 'post',
+        data: params,
+      })
+        .then((res) => {
+          alert('성공적으로 작성되었습니다.');
+          setSuccessWrite(true);
+          history.push('/event/now');
+        })
+        .catch((err) => {
+          console.dir(err);
+        });
+    }
   };
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setCoupon_Id(value);
+  };
+
   return (
     <div>
       <Container>
@@ -51,9 +84,22 @@ const EventWriteForm = () => {
             제목
             <Input id="title" name="title" placeholder="제목을 입력해주세요." onChange={onChangeTitle} value={title} />
           </div>
-          <div className="date">기간</div>
-          <div className="datePicker">
+          <div id="coupon_id">
+            쿠폰
+            <SelectBox onChange={handleChange} value={select}>
+              <option>선택</option>
+              {post &&
+                post.map((item, idx) => (
+                  <React.Fragment key={idx}>
+                    <option value={item.coupon_id}>{item.coupon_name}</option>
+                  </React.Fragment>
+                ))}
+            </SelectBox>
+          </div>
+          <div className="date">
+            기간
             <DatePicker
+              fixedHeight
               selectsRange={true}
               startDate={startDate}
               endDate={endDate}
@@ -88,5 +134,4 @@ const EventWriteForm = () => {
     </div>
   );
 };
-
 export default EventWriteForm;

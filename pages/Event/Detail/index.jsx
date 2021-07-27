@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
 import {
@@ -10,20 +10,32 @@ import {
   TabArea,
   EventList,
   ListButton,
+  EditBtn,
 } from '@pages/Event/Detail/styles';
 import Paging from '@components/Paging';
+import EditModal from '@components/Modal/EventEdit';
+import EventDelete from '@components/Modal/EventDelete';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useSelector } from 'react-router-dom';
 
 const EventDetail = (props) => {
   const eventId = props.match.params.id;
-  const [post, setPost] = useState();
+  // const state = useSelector((state) => state.auth.user);
+
+  const [post, setPost] = useState([]);
   const [totalElements, setTotalElements] = useState();
   const [currentPage, setCurrentPage] = useState(0);
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const [successEdit, setSuccessEdit] = useState(false);
+  const [successDelete, setSuccessDelete] = useState(false);
+
   useEffect(() => {
     axios
       .get(`/api/events/${eventId}`, {
@@ -31,6 +43,7 @@ const EventDetail = (props) => {
       })
       .then((res) => {
         const data = res.data.data;
+        setPost(data);
         setContent(data.content);
         setStartDate(data.start_date);
         setEndDate(data.end_date);
@@ -40,13 +53,56 @@ const EventDetail = (props) => {
         console.log(e);
       });
   }, []);
-  console.log(post);
+
+  const onClickEditBtn = useCallback((e) => {
+    e.preventDefault();
+    setEditModalOpen(true);
+  }, []);
+
+  const onClickDeleteBtn = useCallback((e) => {
+    e.preventDefault();
+    setDeleteModalOpen(true);
+  }, []);
+
+  if (successEdit) {
+    setEditModalOpen(false);
+    props.history.push(`/event/now/${eventId}`);
+    window.location.reload();
+    setSuccessEdit(false);
+  }
+
+  if (successDelete) {
+    setDeleteModalOpen(false);
+    props.history.push('/event/now');
+    window.location.reload();
+    setSuccessDelete(false);
+  }
+
   return (
     <div style={{ height: '100%' }}>
+      <EventDelete
+        eventId={eventId}
+        deleteModalOpen={deleteModalOpen}
+        setDeleteModalOpen={setDeleteModalOpen}
+        setSuccessDelete={setSuccessDelete}
+      />
+      <EditModal
+        eventId={eventId}
+        post={post}
+        editModalOpen={editModalOpen}
+        setEditModalOpen={setEditModalOpen}
+        setSuccessEdit={setSuccessEdit}
+      />
       <EventContainer>
         <Header />
         <Container>
           <EventHeader>이벤트</EventHeader>
+          <EditBtn>
+            <i className="far fa-edit" onClick={onClickEditBtn} setEditModalOpen={setEditModalOpen}></i>
+            <button className="delete" onClick={onClickDeleteBtn} setDeleteModalOpen={setDeleteModalOpen}>
+              &times;
+            </button>
+          </EditBtn>
           <Contents>
             <h3>{title}</h3>
             {content}
@@ -67,18 +123,3 @@ const EventDetail = (props) => {
 };
 
 export default EventDetail;
-
-// const EventLists = ({ item }) => {
-//   const { content, coupon_id, end_date, id, img_url, start_date } = item;
-//   return (
-//     <EventList>
-//       <div>
-//         <img src="/images/placeholder.png"></img>
-//         <span className="evt_title">{content}</span>
-//         <em className="evt_date">
-//           {start_date}~{end_date}
-//         </em>
-//       </div>
-//     </EventList>
-//   );
-// };

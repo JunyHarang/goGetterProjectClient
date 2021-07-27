@@ -7,44 +7,35 @@ import {
   ModalForm,
   Title,
   Content,
-  Tag,
   Container,
-} from '@components/Modal/ShareEdit/styles';
+  File,
+} from '@components/Modal/EventEdit/styles';
 import useInput from '@hooks/useInput';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import apiController from '@apis/apiController';
 
-const ShareEdit = (props) => {
-  // console.log(props);
-  const state = useSelector((state) => state.auth.user);
-
-  const boardId = props.boardId;
+const EventEdit = (props) => {
+  // const state = useSelector((state) => state.auth.user);
+  const eventId = props.eventId;
   const [title, onChangeTitle, setTitle] = useInput(props.post.title);
-  const [bookTitle, onChangeBookTitle, setBookTitle] = useInput(props.post.book_title);
   const [content, onChangeContent, setContent] = useInput(props.post.content);
-  const [tag, onChangeTag, setTag] = useInput(props.post.tag_content);
+  const [img_url, onChangeImg_Url, setImg_Url] = useInput(props.post.img_url);
+  const [coupon_id, onChangeCoupon_Id, setCoupon_Id] = useInput(props.post.coupon_id);
 
   useEffect(() => {
     setTitle(props.post.title);
-    setBookTitle(props.post.book_title);
     setContent(props.post.content);
-    setTag(props.post.tag_content);
+    setImg_Url(props.post.img_url);
+    setCoupon_Id(props.post.coupon_id);
   }, [props]);
 
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-
-      let params = {
-        book_title: bookTitle,
-        content,
-        sharing_board_tag: tag,
-        title,
-        user_id: state.user_id,
-      };
-
+      let params = { title, content, img_url: 'a', coupon_id };
       apiController({
-        url: `/users/sharings?id=${boardId}`,
+        url: `/admin/events/${eventId}`,
         method: 'patch',
         data: params,
       }).then((res) => {
@@ -52,7 +43,7 @@ const ShareEdit = (props) => {
         props.setSuccessEdit(true);
       });
     },
-    [boardId, title, bookTitle, content, tag, state, props],
+    [eventId, title, content, img_url, coupon_id, props],
   );
 
   const onClickNoBtn = useCallback(
@@ -68,14 +59,15 @@ const ShareEdit = (props) => {
       <Modal editModal={props.editModalOpen} />
       <Container editModal={props.editModalOpen}>
         <ModalForm onSubmit={onSubmit}>
-          <h5>글 제목</h5>
+          <h5>제목</h5>
           <Title id="title" type="text" placeholder={title} value={title} onChange={onChangeTitle} />
-          <h5>책 제목</h5>
-          <Title id="book_title" type="text" placeholder={bookTitle} value={bookTitle} onChange={onChangeBookTitle} />
           <h5>내용</h5>
           <Content id="content" type="text" placeholder={content} value={content} onChange={onChangeContent} />
-          <h5>태그</h5>
-          <Tag id="tag" type="text" placeholder={tag} value={tag} onChange={onChangeTag} />
+          <h5>이미지</h5>
+          <File>
+            <label for="file">첨부파일</label>
+            <input type="file" id="file" />
+          </File>
           <ModalBtn>
             <OKBtn type="submit">수정</OKBtn>
             <NoBtn onClick={onClickNoBtn}>닫기</NoBtn>
@@ -86,4 +78,4 @@ const ShareEdit = (props) => {
   );
 };
 
-export default ShareEdit;
+export default EventEdit;

@@ -26,19 +26,15 @@ export const Form = styled.div`
     margin-bottom: 20px;
   }
 
-  & div.date {
-    margin-bottom: 10px;
-  }
-
-  & div.datePicker {
-    display: flex;
-    height: 35px;
+  & .react-datepicker-wrapper {
+    height: 0px;
   }
 
   & button.date-input {
+    margin-left: 15px;
     border: 1px solid #ced4da;
-    width: 300px;
-    height: 33px;
+    width: 240px;
+    height: 30px;
     border-radius: 3px;
     background-color: white;
   }
@@ -149,4 +145,11 @@ export const Button = styled.button`
     text-decoration: none;
     color: white;
   }
+`;
+
+export const SelectBox = styled.select`
+  border-radius: 3px;
+  border: 1px solid #ced4da;
+  height: 30px;
+  margin-left: 15px;
 `;

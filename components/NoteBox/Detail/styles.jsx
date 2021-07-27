@@ -7,13 +7,13 @@ export const Container = styled.div`
   border: 1px solid #ced4da;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border-bottom: none;
 `;
 
 export const Top = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  border-bottom: 1px solid #ced4da;
 
   & h4 {
     width: 70%;

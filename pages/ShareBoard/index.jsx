@@ -29,26 +29,6 @@ const ShareBoard = (props) => {
       });
 
     handlePageChange(currentPage);
-
-    // axios
-    //   .get('/api/sharings', {
-    //     withCredentials: true,
-    //     params: {
-    //       page: currentPage,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setSharedBoards(res.data.data);
-
-    //     const pagination = res.data.pagination;
-    //     const { total_pages, total_elements, current_page, current_elements } = pagination;
-    //     setTotalElements(total_elements);
-    //     setCurrentPage(currentPage);
-    //   })
-    //   .catch((err) => {
-    //     console.dir(err);
-    //   });
   }, []);
 
   const handlePageChange = (page) => {

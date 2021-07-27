@@ -128,6 +128,7 @@ const Discussion = () => {
           </Link>
           <div>
             <Paging
+              discussion={true}
               totalElements={totalElements}
               currentPage={currentPage}
               handlePageChange={handlePageChange}

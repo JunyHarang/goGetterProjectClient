@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Container, Form, WriteHeader, Input, TextArea, Button } from '@components/DiscussionEditForm/styles';
 import useInput from '@hooks/useInput';
-import axios from 'axios';
+import apiController from '@apis/apiController';
 import { Link, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -13,18 +13,17 @@ const EditForm = ({ title, content, Id }) => {
   const [contentValue, setContentValue] = useState(content);
 
   const onSubmit = (e) => {
-    console.log(users.user_id);
-    axios
-      .patch(`/api/users/discussions/edit/${Id}?userId=${users.user_id}`, {
-        content: contentValue,
-        title: titleValue,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    // console.log(users.user_id);
+    let params = {
+      content: contentValue,
+      title: titleValue,
+    };
+
+    apiController({
+      url: `/users/discussions/edit/${Id}?userId=${users.user_id}`,
+      method: 'patch',
+      data: params,
+    });
   };
   const titleChange = (e) => {
     const val = e.target.value;

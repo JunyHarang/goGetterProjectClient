@@ -46,11 +46,16 @@ export const signup = (email, name, nick_name, password, phone_number) => (dispa
 export const signin = (email, password) => (dispatch) => {
   return authService.signin(email, password).then(
     (data) => {
-      console.log(data);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { user: data },
-      });
+      if (data.message === '아이디불일치') {
+        dispatch({
+          type: LOGIN_FAIL,
+        });
+      } else {
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: { user: data.data },
+        });
+      }
 
       return Promise.resolve();
     },

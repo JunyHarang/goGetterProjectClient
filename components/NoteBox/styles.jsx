@@ -7,7 +7,6 @@ export const Container = styled.div`
   border: 1px solid #ced4da;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border-bottom: none;
 
   & h4 {
     margin: 0;

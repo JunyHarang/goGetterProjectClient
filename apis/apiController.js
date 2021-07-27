@@ -5,6 +5,7 @@ const access_token = JSON.parse(localStorage.getItem('access_token'));
 
 const instance = axios.create({
   baseURL: '/api',
+  withCredentials: true,
   timeout: 1000,
 });
 

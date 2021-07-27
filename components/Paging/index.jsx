@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '@components/Paging/styles.css';
 import Pagination from 'react-js-pagination';
 
-const Paging = ({ bookBoard = null, totalElements, currentPage, handlePageChange }) => {
+const Paging = ({ bookBoard = null, discussion = null, totalElements, currentPage, handlePageChange }) => {
   return (
     <div>
       {bookBoard ? (
@@ -15,7 +15,7 @@ const Paging = ({ bookBoard = null, totalElements, currentPage, handlePageChange
           nextPageText={'>'}
           onChange={handlePageChange}
         />
-      ) : (
+      ) : ( discussion ? (
         <Pagination
           activePage={currentPage + 1}
           itemsCountPerPage={7}
@@ -25,7 +25,19 @@ const Paging = ({ bookBoard = null, totalElements, currentPage, handlePageChange
           nextPageText={'>'}
           onChange={handlePageChange}
         />
-      )}
+      ) :(
+        <Pagination
+        activePage={currentPage + 1}
+        itemsCountPerPage={20}
+        totalItemsCount={totalElements}
+        pageRangeDisplayed={10}
+        prevPageText={'<'}
+        nextPageText={'>'}
+        onChange={handlePageChange}
+      />
+      ) 
+      )
+  }
     </div>
   );
 };

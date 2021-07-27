@@ -37,7 +37,6 @@ const signin = (email, password) => {
         localStorage.setItem('user_id', JSON.stringify(res.data.data.user_id));
         localStorage.setItem('user_grade', JSON.stringify(res.data.data.user_grade));
       }
-
       return res.data;
     });
 };

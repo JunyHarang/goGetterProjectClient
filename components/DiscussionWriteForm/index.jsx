@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Container, Form, WriteHeader, Input, TextArea, Button } from '@components/DiscussionWriteForm/styles';
 import useInput from '@hooks/useInput';
-import axios from 'axios';
+import apiController from '@apis/apiController';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -13,17 +13,18 @@ const WriteForm = () => {
 
   const onSubmit = (e) => {
     // e.preventDefault();
-    axios
-      .post(`/api/users/discussions/${users.user_id}`, {
-        content: content,
-        title: title,
-      })
-      .then((res) => {
-        history.push('/discussion');
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    let params = {
+      content,
+      title,
+    };
+
+    apiController({
+      url: `/users/discussions/${users.user_id}`,
+      method: 'post',
+      data: params,
+    }).then((res) => {
+      history.push('disccussion');
+    });
   };
   return (
     <div>

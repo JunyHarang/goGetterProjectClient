@@ -12,6 +12,21 @@ export const Container = styled.div`
   left: 50%;
   transform: translateX(-50%);
   margin-bottom: 100px;
+
+  & i {
+    font-size: 30px;
+    color: #0f4c81;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+    &:hover {
+      color: blue;
+      text-decoration: none;
+    }
+    & > a {
+      text-decoration: none;
+    }
+  }
 `;
 
 export const EventHeader = styled.h3`

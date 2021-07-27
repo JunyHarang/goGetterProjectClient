@@ -11,6 +11,8 @@ import {
 } from '@components/Reply/styles';
 import { useSelector } from 'react-redux';
 import useInput from '@hooks/useInput';
+import apiController from '@apis/apiController';
+
 const Reply = ({ discussionId }) => {
   const users = useSelector((state) => state.auth.user);
   const currentId = users.user_id;
@@ -19,32 +21,31 @@ const Reply = ({ discussionId }) => {
   const [content, setContent] = useInput('');
 
   useEffect(() => {
-    axios
-      .get(`/api/bkusers/discussionreplies/${discussionId}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
+    apiController({
+      url: `/bkusers/discussionreplies/${discussionId}`,
+      method: 'get',
+    }).then((res) => {
+      if (res.data.data) {
         const data = res.data.data.content;
         const page = res.data.pagination.total_elements;
         setCount(page);
         setReply(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    });
   }, []);
 
   const onSubmit = (e) => {
-    axios
-      .post(`/api/users/discussionreplies/${discussionId}?userId=${currentId}`, {
-        content: content,
-      })
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    let params = {
+      content,
+    };
+
+    apiController({
+      url: `/users/discussionreplies/${discussionId}?userId=${currentId}`,
+      method: 'post',
+      data: params,
+    }).then((res) => {
+      window.location.reload();
+    });
   };
 
   return (

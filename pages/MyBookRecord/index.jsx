@@ -31,18 +31,20 @@ const MyBookRecord = (props) => {
       data: params,
     });
 
-    setSharedBoards(res.data.data.content);
-    setTotalElements(res.data.pagination.total_elements);
-    setCurrentPage(res.data.pagination.current_page);
+    if (res.data.message === '조회성공') {
+      setSharedBoards(res.data.data.content);
+      setTotalElements(res.data.pagination.total_elements);
+      setCurrentPage(res.data.pagination.current_page);
+    }
   };
 
   const onClickEdit = useCallback(() => {
     props.history.push('/mybookrecord/write');
   }, []);
 
-  if (!sharedBoards || !totalElements) {
-    return <div>Loading...</div>;
-  }
+  // if (!sharedBoards || !totalElements) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div style={{ height: '100%' }}>

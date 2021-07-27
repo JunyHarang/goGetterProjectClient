@@ -8,43 +8,44 @@ import {
   MainText,
   SubText,
   Container,
-} from '@components/Modal/Check/styles';
+} from '@components/Modal/MemberDelete/styles';
 import apiController from '@apis/apiController';
 
-const ShareDelete = (props) => {
-  // console.log(props);
+const MemberDelete = ({ userId, ...rest }) => {
+  console.log(userId);
 
   const onClickDelete = useCallback(
     (e) => {
       e.preventDefault();
+
       apiController({
-        url: `/users/sharings?boardId=${props.boardId}&userId=${props.userId}`,
+        url: `/admin/bkuser/delete/${userId}`,
         method: 'delete',
       }).then((res) => {
-        alert('삭제되었습니다.');
-        props.setSuccessDelete(true);
+        alert('탈퇴되었습니다.');
+        rest.setSuccessDelete(true);
       });
     },
-    [props],
+    [userId, rest],
   );
 
   return (
     <>
-      <Modal checkModal={props.deleteModalOpen} />
-      <Container checkModal={props.deleteModalOpen}>
+      <Modal checkModal={rest.deleteModalOpen} />
+      <Container checkModal={rest.deleteModalOpen}>
         <ModalWrapper>
-          <MainText>삭제하시겠습니까?</MainText>
+          <MainText>탈퇴시키겠습니까?</MainText>
           <SubText></SubText>
           <ModalBtn>
             <NoBtn
               onClick={() => {
-                props.setDeleteModalOpen(false);
+                rest.setDeleteModalOpen(false);
               }}
             >
               취소하기
             </NoBtn>
 
-            <OKBtn onClick={onClickDelete}>삭제하기</OKBtn>
+            <OKBtn onClick={onClickDelete}>탈퇴하기</OKBtn>
           </ModalBtn>
         </ModalWrapper>
       </Container>
@@ -52,4 +53,4 @@ const ShareDelete = (props) => {
   );
 };
 
-export default ShareDelete;
+export default MemberDelete;

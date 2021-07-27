@@ -9,6 +9,7 @@ import ShareBoardReply from '@components/ShareBoardReply';
 import EditModal from '@components/Modal/ShareEdit';
 import DeleteModal from '@components/Modal/ShareDelete';
 import useInput from '@hooks/useInput';
+import apiController from '@apis/apiController';
 
 const ShareDetail = (props) => {
   const { boardId } = useParams();
@@ -24,28 +25,43 @@ const ShareDetail = (props) => {
   const [successDelete, setSuccessDelete] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`/api/bkuser/sharings?id=${boardId}`)
-      .then((res) => {
-        // console.log(res.data.data);
-        setPost(res.data.data);
-        setWriterId(res.data.data.writer_info.writer_id);
-        setWriterNickName(res.data.data.writer_info.nick_name);
-        // console.log('상세게시판 api', res.data.data);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    apiController({
+      url: `/bkusers/sharings?id=${boardId}`,
+      method: 'get',
+    }).then((res) => {
+      setPost(res.data.data);
+      setWriterId(res.data.data.writer_info.writer_id);
+      setWriterNickName(res.data.data.writer_info.nick_name);
+    });
+    // axios
+    //   .get(`/api/bkuser/sharings?id=${boardId}`)
+    //   .then((res) => {
+    //     // console.log(res.data.data);
+    //     setPost(res.data.data);
+    //     setWriterId(res.data.data.writer_info.writer_id);
+    //     setWriterNickName(res.data.data.writer_info.nick_name);
+    //     // console.log('상세게시판 api', res.data.data);
+    //   })
+    //   .catch((err) => {
+    //     console.dir(err);
+    //   });
 
-    axios
-      .get(`/api/user/sharing-reply?boardId=${boardId}`)
-      .then((res) => {
-        setReply(res.data.data);
-        // console.log('상세게시판 댓글 api', res.data.data);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    apiController({
+      url: `/users/sharing-reply?boardId=${boardId}`,
+      method: 'get',
+    }).then((res) => {
+      setReply(res.data.data);
+    });
+
+    // axios
+    //   .get(`/api/users/sharing-reply?boardId=${boardId}`)
+    //   .then((res) => {
+    //     setReply(res.data.data);
+    //     // console.log('상세게시판 댓글 api', res.data.data);
+    //   })
+    //   .catch((err) => {
+    //     console.dir(err);
+    //   });
   }, []);
 
   if (!post) {

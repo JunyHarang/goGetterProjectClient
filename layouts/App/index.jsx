@@ -24,6 +24,7 @@ const Event = loadable(() => import('@pages/Event/Now'));
 const EventDetail = loadable(() => import('@pages/Event/Detail'));
 const EventEnd = loadable(() => import('@pages/Event/End'));
 const EventWrite = loadable(() => import('@pages/Event/Write'));
+const Admin = loadable(() => import('@pages/Admin'));
 
 const App = () => {
   return (
@@ -47,10 +48,11 @@ const App = () => {
           <Route path="/shareboard" component={ShareBoard} />
           <Route path="/event/now/:id" component={EventDetail} />
           <Route path="/event/now" component={Event} />
-          <Route path="/event/write" component={EventWrite} />
+          <Route path="/event/write" component={Auth(EventWrite, 'ADMIN')} />
           <Route path="/event/end" component={EventEnd} />
           <Route path="/note" component={Note} />
           <Route path="/mypage/profile" component={Auth(MyPageProfile, 'USER')} />
+          <Route path="/admin" component={Auth(Admin, 'ADMIN')} />
         </Switch>
       </ScrollToTop>
     </div>

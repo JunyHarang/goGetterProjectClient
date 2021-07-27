@@ -9,8 +9,8 @@ import {
   SubText,
   Container,
 } from '@components/Modal/Check/styles';
-import axios from 'axios';
 import { Link, Redirect, useHistory } from 'react-router-dom';
+import apiController from '@apis/apiController';
 
 const Check = ({ checkModalOpen, setCheckModalOpen, Id, userId }) => {
   // console.log({ checkModalOpen });
@@ -19,16 +19,12 @@ const Check = ({ checkModalOpen, setCheckModalOpen, Id, userId }) => {
 
   const Delete = useCallback(
     (e) => {
-      axios
-        .delete(`/api/users/discussions/del/${Id}?userId=${userId}`, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          history.push('/discussion');
-        })
-        .catch((err) => {
-          console.dir(err);
-        });
+      apiController({
+        url: `/users/discussions/del/${Id}?userId=${userId}`,
+        method: 'delete',
+      }).then((res) => {
+        history.push('/discussion');
+      });
     },
     [Id, userId], // 넣어줘야함
   );

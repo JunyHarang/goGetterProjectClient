@@ -18,6 +18,7 @@ export const Contents = styled.div`
   border-bottom: 1px solid #ccc;
   margin-bottom: 50px;
   padding-bottom: 50px;
+  margin-top: 100px;
 `;
 export const ListButton = styled.div`
   text-align: center;
@@ -34,6 +35,29 @@ export const ListButton = styled.div`
   & button > a {
     text-decoration: none;
     color: #0f4c81;
+  }
+`;
+
+export const EditBtn = styled.div`
+  float: right;
+  & i {
+    font-size: 25px;
+    color: #ccc;
+    cursor: pointer;
+  }
+
+  & .delete {
+    margin-left: 10px;
+    background-color: white;
+    border: 0px;
+    font-size: 35px;
+    color: red;
+    cursor: pointer;
+  }
+
+  & .delete:focus {
+    border: none;
+    outline: none;
   }
 `;
 

@@ -17,7 +17,6 @@ const NowEvent = ({ history }) => {
       })
       .then((res) => {
         const data = res.data.data.content;
-        console.log(data);
         setPost(data);
       })
       .catch((e) => {
@@ -33,6 +32,9 @@ const NowEvent = ({ history }) => {
         <Header />
         <Container>
           <EventHeader>이벤트</EventHeader>
+          <Link to={'/event/write'}>
+            <i className="fas fa-plus"></i>
+          </Link>
           <EventTab>
             <li className="on">진행중인 이벤트</li>
             <li onClick={onEndEvent}>종료된 이벤트</li>

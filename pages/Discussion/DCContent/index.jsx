@@ -14,7 +14,7 @@ import {
   DCEdit,
 } from '@pages/Discussion/DCContent/styles';
 import Reply from '@components/Reply';
-import axios from 'axios';
+import apiController from '@apis/apiController';
 import { useSelector, useStore } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import CheckModal from '@components/Modal/Check';
@@ -43,21 +43,19 @@ const DCContent = (props) => {
   // };
 
   useEffect(() => {
-    axios
-      .get(`/api/bkusers/discussions/${id}?userId=${currentId}`)
-      .then((res) => {
-        const data = res.data.data;
-        setTitle(data.title);
-        setContent(data.content);
-        setNickName(data.user_nick_name);
-        setDate(data.create_at);
-        setId(data.id);
-        setUserId(data.user_id);
-        setReadHit(data.readhit);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    apiController({
+      url: `/bkusers/discussions/${id}?userId=${currentId}`,
+      method: 'get',
+    }).then((res) => {
+      const data = res.data.data;
+      setTitle(data.title);
+      setContent(data.content);
+      setNickName(data.user_nick_name);
+      setDate(data.create_at);
+      setId(data.id);
+      setUserId(data.user_id);
+      setReadHit(data.readhit);
+    });
   }, []);
 
   return (
