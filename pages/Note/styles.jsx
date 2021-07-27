@@ -1,21 +1,22 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  height: auto;
-  min-height: 100%;
-  padding-bottom: 300px;
-`;
-
-export const AllDiv = styled.div`
   width: 1200px;
   position: relative;
   left: 50%;
-  transform: translateX(-50%);
-  display: flex;
+  transform: translate(-50%);
   margin-bottom: 100px;
+  padding-bottom: 300px;
 `;
 
-export const ContentDiv = styled.div`
-  width: 950px;
-  padding-top: 40px;
+export const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 50px 30px;
+  min-height: 100%;
+
+  & h4 {
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
 `;

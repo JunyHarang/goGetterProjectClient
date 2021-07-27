@@ -4,10 +4,10 @@ import Footer from '@layouts/Footer';
 import { Container, Title, Content, PopularCards, SharedCards, Button } from '@pages/ShareBoard/styles';
 import Cards from '@components/Cards';
 import { Row } from 'antd';
-import axios from 'axios';
 import Paging from '@components/Paging';
 import { withRouter } from 'react-router';
 import { useSelector } from 'react-redux';
+import apiController from '@apis/apiController';
 
 const MyBookRecord = (props) => {
   const state = useSelector((state) => state.auth);
@@ -21,37 +21,28 @@ const MyBookRecord = (props) => {
     handlePageChange(currentPage);
   }, []);
 
-  const handlePageChange = (page) => {
-    axios
-      .get(`/api/bkusers/book-reports/${userId}`, {
-        withCredentials: true,
-        params: {
-          page: page - 1,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        setSharedBoards(res.data.data.content);
-        // console.log(page);
+  const handlePageChange = async (page) => {
+    let params = {
+      page: page - 1,
+    };
+    const res = await apiController({
+      url: `/bkusers/book-reports/${userId}`,
+      method: 'get',
+      data: params,
+    });
 
-        const pagination = res.data.pagination;
-        const { total_pages, total_elements, current_page, current_elements } = pagination;
-        setTotalElements(total_elements);
-        setCurrentPage(current_page);
-        window.scrollTo(0, 0);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    setSharedBoards(res.data.data.content);
+    setTotalElements(res.data.pagination.total_elements);
+    setCurrentPage(res.data.pagination.current_page);
   };
 
   const onClickEdit = useCallback(() => {
     props.history.push('/mybookrecord/write');
   }, []);
 
-  // if (!sharedBoards.length || !popularSharedBoards.length) {
-  //   return <div>loading...</div>;
-  // }
+  if (!sharedBoards || !totalElements) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div style={{ height: '100%' }}>

@@ -21,8 +21,8 @@ import { Error } from '@pages/SignUp/SignUp2/styles';
 import { useSelector } from 'react-redux';
 import useInput from '@hooks/useInput';
 import pwEncrypt from '@utils/pwEncrypt';
-import axios from 'axios';
 import { withRouter } from 'react-router';
+import apiController from '@apis/apiController';
 
 const MyPageProfile = (props) => {
   const pwCheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
@@ -55,21 +55,16 @@ const MyPageProfile = (props) => {
   );
 
   useEffect(() => {
-    axios
-      .get(`/api/bkusers/mypage/${userId}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        const data = res.data.data;
-        setNickName(data.nick_name);
-        setEmail(data.email);
-        setName(data.name);
-        setPhoneNumber(data.phone_number);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    apiController({
+      url: `/bkusers/mypage/${userId}`,
+      method: 'get',
+    }).then((res) => {
+      const data = res.data.data;
+      setNickName(data.nick_name);
+      setEmail(data.email);
+      setName(data.name);
+      setPhoneNumber(data.phone_number);
+    });
   }, []);
 
   const onSubmit = useCallback(
@@ -84,31 +79,20 @@ const MyPageProfile = (props) => {
         alert('닉네임을 확인해주세요.');
       } else {
         const pwHash = pwEncrypt(password);
-        axios
-          .patch(
-            `/api/bkusers/mypage/edit/${userId}`,
-            // {
-            //   headers: {
-            //     'Access-Control-Allow-Origin': '*',
-            //   },
-            // },
-            {
-              nick_name: nickName,
-              password: pwHash,
-            },
-            {
-              withCredentials: true,
-            },
-          )
-          .then((res) => {
-            console.log(res);
-            alert('성공적으로 수정되었습니다.');
-            props.history.push(`/mypage/profile/${userId}`);
-            window.location.reload();
-          })
-          .then((err) => {
-            console.dir(err);
-          });
+        let params = {
+          nick_name: nickName,
+          password: pwHash,
+        };
+
+        apiController({
+          url: `/bkusers/mypage/edit/${userId}`,
+          method: 'patch',
+          data: params,
+        }).then((res) => {
+          alert('성공적으로 수정되었습니다.');
+          props.history.push(`/mypage/profile/${userId}`);
+          window.location.reload();
+        });
       }
     },
     [mismatchError, password, nickName, pwCheck, nickNameCheck, userId],

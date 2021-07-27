@@ -18,7 +18,6 @@ const EditForm = ({ title, content, Id }) => {
       .patch(`/api/users/discussions/edit/${Id}?userId=${users.user_id}`, {
         content: contentValue,
         title: titleValue,
-        create_at: '2021-07-05',
       })
       .then((res) => {
         console.log(res);
@@ -60,11 +59,11 @@ const EditForm = ({ title, content, Id }) => {
               value={contentValue}
             />
           </div>{' '}
-          <Redirect to={{ pathname: `/discussion/content/${Id}` }}>
+          <Link to={{ pathname: `/discussion/content/${Id}` }}>
             <Button type="submit" onClick={onSubmit}>
               수정하기
             </Button>
-          </Redirect>
+          </Link>
         </Form>
       </Container>
     </div>

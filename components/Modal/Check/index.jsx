@@ -10,11 +10,13 @@ import {
   Container,
 } from '@components/Modal/Check/styles';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 
 const Check = ({ checkModalOpen, setCheckModalOpen, Id, userId }) => {
   // console.log({ checkModalOpen });
   // console.log(Id);
+  const history = useHistory();
+
   const Delete = useCallback(
     (e) => {
       axios
@@ -22,7 +24,7 @@ const Check = ({ checkModalOpen, setCheckModalOpen, Id, userId }) => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res);
+          history.push('/discussion');
         })
         .catch((err) => {
           console.dir(err);

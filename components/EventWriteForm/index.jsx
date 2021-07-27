@@ -5,32 +5,35 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
+import { ko } from 'date-fns/esm/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const EventWriteForm = () => {
   const users = useSelector((state) => state.auth.user);
-  const ExampleCustomInput = ({ value, onClick }) => (
-    <button className="example-custom-input" onClick={onClick}>
+
+  const DateInput = ({ value, onClick }) => (
+    <button className="date-input" onClick={onClick}>
       {value}
     </button>
   );
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
   const [title, onChangeTitle] = useInput('');
   const [content, onChangeContent] = useInput('');
   const [coupon_id, setCoupon_Id] = useInput('');
   const [img_url, setImg_Url] = useInput('');
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  // const [startDate, setStartDate] = useState(new Date());
+  // const [endDate, setEndDate] = useState(new Date());
 
   const onSubmit = (e) => {
     console.log(users.user_id);
     axios
       .post(`/api/admin/events`, {
         content,
-        coupon_id,
         title,
         img_url,
-        // start_date,
-        // end_date,
+        start_date: dateRange[0],
+        end_date: dateRange[1],
       })
       .then((res) => {
         console.log(res);
@@ -42,29 +45,28 @@ const EventWriteForm = () => {
   return (
     <div>
       <Container>
-        <WriteHeader>게시글 작성</WriteHeader>
+        <WriteHeader>이벤트 게시글 작성</WriteHeader>
         <Form>
           <div id="title">
-            이벤트 제목
+            제목
             <Input id="title" name="title" placeholder="제목을 입력해주세요." onChange={onChangeTitle} value={title} />
           </div>
-          <div id="date">이벤트 기간</div>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            customInput={<ExampleCustomInput />}
-          />
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            selectsEnd
-            startDate={startDate}
-            minDate={startDate}
-            maxDate={new Date()}
-            customInput={<CustomInput />}
-          />
+          <div className="date">기간</div>
+          <div className="datePicker">
+            <DatePicker
+              selectsRange={true}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(update) => setDateRange(update)}
+              locale={ko}
+              dateFormat="yyyy-MM-dd"
+              placeholderText="이벤트 날짜 선택"
+              isClearable={true}
+              customInput={<DateInput />}
+            />
+          </div>
           <div id="content">
-            이벤트 내용
+            내용
             <TextArea
               id="content"
               name="content"
@@ -73,6 +75,11 @@ const EventWriteForm = () => {
               value={content}
             />
           </div>
+          <div className="file">
+            <label for="file">첨부파일</label>
+            <input type="file" id="file" />
+          </div>
+
           <Button type="submit" onClick={onSubmit}>
             작성하기
           </Button>

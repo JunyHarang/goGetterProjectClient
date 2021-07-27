@@ -8,24 +8,71 @@ export const Container = styled.div`
   width: 1200px;
 `;
 
-export const WriteHeader = styled.h2`
+export const WriteHeader = styled.h3`
   padding: 50px 30px;
+  font-weight: bold;
 `;
 
 export const Form = styled.div`
-  margin: 0px 80px;
+  margin-left: 30px;
+  margin-right: 30px;
   height: auto;
   min-height: 100%;
   padding-bottom: 300px;
   font-size: 17px;
-  color: #0f4c81;
+  color: #4a4a4a;
   font-weight: bold;
   & div {
     margin-bottom: 20px;
   }
 
+  & div.date {
+    margin-bottom: 10px;
+  }
+
+  & div.datePicker {
+    display: flex;
+    height: 35px;
+  }
+
+  & button.date-input {
+    border: 1px solid #ced4da;
+    width: 300px;
+    height: 33px;
+    border-radius: 3px;
+    background-color: white;
+  }
+
+  & span {
+    color: #ced4da;
+    margin: 5px 20px;
+    font-size: 20px;
+  }
+
   & div#content {
-    margin-top: 50px;
+    margin-top: 20px;
+  }
+
+  & .file label {
+    display: inline-block;
+    width: 100px;
+    height: 45px;
+    background-color: #4a4a4a;
+    color: #fff;
+    cursor: pointer;
+    line-height: 45px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  & .file input[type='file'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0); /* 클립에 범위만큼만 노출시킴 */
+    overflow: hidden;
+    padding: 0;
   }
 `;
 

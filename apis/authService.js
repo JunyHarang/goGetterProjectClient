@@ -31,8 +31,11 @@ const signin = (email, password) => {
       },
     )
     .then((res) => {
-      if (res.data.data.access_token) {
-        localStorage.setItem('user', JSON.stringify(res.data.data));
+      if (res.data.data) {
+        localStorage.setItem('access_token', JSON.stringify(res.data.data.access_token));
+        localStorage.setItem('refresh_token', JSON.stringify(res.data.data.refresh_token));
+        localStorage.setItem('user_id', JSON.stringify(res.data.data.user_id));
+        localStorage.setItem('user_grade', JSON.stringify(res.data.data.user_grade));
       }
 
       return res.data;
@@ -40,7 +43,10 @@ const signin = (email, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem('user');
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+  localStorage.removeItem('user_id');
+  localStorage.removeItem('user_grade');
 };
 
 export default { signup, signin, logout };

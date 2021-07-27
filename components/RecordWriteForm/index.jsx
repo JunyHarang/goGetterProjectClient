@@ -3,7 +3,7 @@ import { Container, Form, WriteHeader, Input, TextArea, Button, FormDiv } from '
 import useInput from '@hooks/useInput';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+import apiController from '@apis/apiController';
 
 const WriteForm = () => {
   const [title, onChangeTitle] = useInput('');
@@ -28,27 +28,21 @@ const WriteForm = () => {
       } else if (!content.length || !content.trim().length) {
         alert('내용을 작성해주세요.');
       } else {
-        axios
-          .post(
-            `/api/bkusers/book-reports?userId=${userId}`,
-            {
-              book_name: bookTitle,
-              book_report_tag: tag,
-              content,
-              title,
-            },
-            {
-              withCredentials: true,
-            },
-          )
-          .then((res) => {
-            console.log(res);
-            alert('성공적으로 작성되었습니다.');
-            setCreateSuccess(true);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        let params = {
+          book_name: bookTitle,
+          book_report_tag: tag,
+          content,
+          title,
+        };
+
+        apiController({
+          url: `/bkusers/book-reports?userId=${userId}`,
+          method: 'post',
+          data: params,
+        }).then((res) => {
+          alert('성공적으로 작성되었습니다.');
+          setCreateSuccess(true);
+        });
       }
     },
     [title, bookTitle, content, tag, userId],

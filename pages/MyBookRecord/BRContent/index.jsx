@@ -6,8 +6,8 @@ import RecordDetailContent from '@components/RecordDetailContent';
 import { useParams } from 'react-router';
 import EditModal from '@components/Modal/RecordEdit';
 import DeleteModal from '@components/Modal/RecordDelete';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
+import apiController from '@apis/apiController';
 
 const BRContent = (props) => {
   const { boardId } = useParams();
@@ -21,18 +21,17 @@ const BRContent = (props) => {
   const [successDelete, setSuccessDelete] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`/api/bkusers/book-reports/detail/${boardId}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        // console.log(res.data.data);
-        setRecordDetailData(res.data.data);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    bookReportDetail();
   }, []);
+
+  const bookReportDetail = async () => {
+    const res = await apiController({
+      url: `/bkusers/book-reports/detail/${boardId}`,
+      method: 'get',
+    });
+
+    setRecordDetailData(res.data.data);
+  };
 
   if (successEdit) {
     setEditModalOpen(false);

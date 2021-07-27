@@ -16,25 +16,31 @@ import {
 import Reply from '@components/Reply';
 import axios from 'axios';
 import { useSelector, useStore } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import CheckModal from '@components/Modal/Check';
+import formatDate from '@utils/formatDate';
 
 const DCContent = (props) => {
   const users = useSelector((state) => state.auth.user);
   const currentId = users.user_id;
-  const read_hit = props.location.state.read_hit;
+  const history = useHistory();
   const { id } = props.match.params;
-  const [Id, setId] = useState('');
+  const [Id, setId] = useState();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [nickName, setNickName] = useState('');
   const [date, setDate] = useState('');
   const [userId, setUserId] = useState('');
   const [checkModalOpen, setCheckModalOpen] = useState(false);
+  const [readHit, setReadHit] = useState(0);
 
   const onClickCheckBtn = (e) => {
     setCheckModalOpen(true);
   };
+
+  // const onClickEditBtn = (e) => {
+  //   history.push(`/discussion/edit/${id}`);
+  // };
 
   useEffect(() => {
     axios
@@ -47,6 +53,7 @@ const DCContent = (props) => {
         setDate(data.create_at);
         setId(data.id);
         setUserId(data.user_id);
+        setReadHit(data.readhit);
       })
       .catch((e) => {
         console.log(e);
@@ -64,9 +71,9 @@ const DCContent = (props) => {
             <SubTitle>{title}</SubTitle>
             <SubMeta>
               <SubMetaLeft>
-                <span className="date">{date}</span>|
+                <span className="date">{formatDate(date)}</span>|
                 <span className="count">
-                  조회수 <span className="countNo">{read_hit}</span>
+                  조회수 <span className="countNo">{readHit}</span>
                 </span>
               </SubMetaLeft>
               <SubMetaRight>
@@ -78,7 +85,7 @@ const DCContent = (props) => {
           </MainContainer>
           {userId === currentId ? (
             <DCEdit>
-              <Link to={`/discussion/edit/${id}`}>
+              <Link to={{ pathname: `/discussion/edit/${id}`, state: { title, content } }}>
                 <button className="edit">수정하기</button>
               </Link>
               <button className="delete" onClick={onClickCheckBtn}>

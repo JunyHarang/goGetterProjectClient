@@ -9,7 +9,10 @@ import {
   AUTH_FAIL,
 } from '../actions/type';
 
-const user = JSON.parse(localStorage.getItem('user'));
+const user = {
+  user_id: JSON.parse(localStorage.getItem('user_id')),
+  user_grade: JSON.parse(localStorage.getItem('user_grade')),
+};
 
 const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
 

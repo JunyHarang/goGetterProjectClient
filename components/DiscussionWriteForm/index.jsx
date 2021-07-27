@@ -2,17 +2,16 @@ import React, { useState, useCallback } from 'react';
 import { Container, Form, WriteHeader, Input, TextArea, Button } from '@components/DiscussionWriteForm/styles';
 import useInput from '@hooks/useInput';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const WriteForm = () => {
   const users = useSelector((state) => state.auth.user);
+  const history = useHistory();
   const [title, onChangeTitle] = useInput('');
   const [content, onChangeContent] = useInput('');
 
   const onSubmit = (e) => {
-    console.log('LLLLL');
-    console.log(users.user_id);
     // e.preventDefault();
     axios
       .post(`/api/users/discussions/${users.user_id}`, {
@@ -20,7 +19,7 @@ const WriteForm = () => {
         title: title,
       })
       .then((res) => {
-        console.log(res);
+        history.push('/discussion');
       })
       .catch((err) => {
         console.dir(err);
@@ -45,11 +44,9 @@ const WriteForm = () => {
               value={content}
             />
           </div>
-          <Link to="/discussion">
-            <Button type="submit" onClick={onSubmit}>
-              작성하기
-            </Button>
-          </Link>
+          <Button type="submit" onClick={onSubmit}>
+            작성하기
+          </Button>
         </Form>
       </Container>
     </div>

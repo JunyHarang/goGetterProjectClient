@@ -12,7 +12,7 @@ import {
 } from '@components/Modal/RecordEdit/styles';
 import useInput from '@hooks/useInput';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import apiController from '@apis/apiController';
 
 const RecordEdit = (props) => {
   // console.log(props);
@@ -34,26 +34,21 @@ const RecordEdit = (props) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      axios
-        .patch(
-          `/api/bkusers/book-reports/${boardId}?userId=${state.user_id}`,
-          {
-            book_name: bookTitle,
-            content,
-            tag_name: tag,
-          },
-          {
-            withCredentials: true,
-          },
-        )
-        .then((res) => {
-          // console.log(res);
-          alert('수정되었습니다.');
-          props.setSuccessEdit(true);
-        })
-        .catch((err) => {
-          console.dir(err);
-        });
+
+      let params = {
+        book_name: bookTitle,
+        content,
+        tag_name: tag,
+      };
+
+      apiController({
+        url: `/bkusers/book-reports/${boardId}?userId=${state.user_id}`,
+        method: 'patch',
+        data: params,
+      }).then((res) => {
+        props.setSuccessEdit(true);
+        alert('수정되었습니다.');
+      });
     },
     [boardId, title, bookTitle, content, tag, state, props],
   );

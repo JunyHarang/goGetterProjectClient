@@ -26,8 +26,8 @@ const LogIn = (props) => {
 
       dispatch(signin(email, pwHash))
         .then(() => {
-          props.history.push('/main');
-          window.location.reload();
+          // props.history.push('/main');
+          // window.location.reload();
         })
         .catch((err) => {
           console.dir(err);
@@ -54,9 +54,9 @@ const LogIn = (props) => {
     [email, password],
   );
 
-  if (isLoggedIn) {
-    props.history.push('/main');
-  }
+  // if (isLoggedIn) {
+  //   props.history.push('/main');
+  // }
 
   return (
     <div id="container" style={{ height: '100%' }}>

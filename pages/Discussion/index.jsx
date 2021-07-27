@@ -17,6 +17,7 @@ import Paging from '@components/Paging';
 import useInput from '@hooks/useInput';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import formatDate from '@utils/formatDate';
 
 const Discussion = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -157,7 +158,7 @@ const DCItem = ({ item, isLoggedIn }) => {
       )}
       <td>{read_hit}</td>
       <td>{user_nickname}</td>
-      <td>{create_at}</td>
+      <td>{formatDate(create_at)}</td>
     </tr>
   );
 };
