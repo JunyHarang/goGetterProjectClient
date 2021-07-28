@@ -1,15 +1,22 @@
 import React from 'react';
 import { Container, Top, Bottom } from '@components/NoteBox/Member/styles';
+import { useSelector } from 'react-redux';
 
-const Member = () => {
+const Member = ({ partner, host, onClickMember, roomId, nickName }) => {
+  const data = useSelector((state) => state.conversation[partner][state.conversation[partner].length - 1]);
+
+  const sendMemberData = () => {
+    onClickMember(partner, roomId, nickName);
+  };
+
   return (
     <div>
-      <Container>
+      <Container onClick={sendMemberData}>
         <Top>
-          <h5>닉네임</h5>
-          <span>날짜</span>
+          <h5>{data.nick_name}</h5>
+          <span>{data.send_at}</span>
         </Top>
-        <Bottom>최근 쪽지</Bottom>
+        <Bottom>{data.content}</Bottom>
       </Container>
     </div>
   );

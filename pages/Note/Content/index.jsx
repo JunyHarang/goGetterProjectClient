@@ -1,28 +1,34 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import NoteBox from '@components/NoteBox';
-import Detail from '@components/NoteBox/Detail';
 import { Container } from '@pages/Note/Content/styles';
+import apiController from '@apis/apiController';
 import SockJsClient from 'react-stomp';
+import { useDispatch, useSelector } from 'react-redux';
+import { insertPartner, insertMessage, receive } from '@reducers/conversation';
 
 const Content = ({ userId }) => {
   const socketRef = useRef(null);
   let topics = ['/topic/' + userId];
 
   const [messages, setMessages] = useState([]);
+  // const [memberList, setMemberList] = useState([]);
 
-  const sendToMessage = (senderId, roomId, msg) => {
+  const dispatch = useDispatch();
+
+  const sendToMessage = (senderId, receiverId, roomId, msg) => {
     const params = {
       sender_id: senderId,
+      receiver_id: receiverId,
       message_room_id: roomId,
       content: msg,
     };
-    console.log(socketRef);
     socketRef.current.sendMessage('/app/chat/send', JSON.stringify(params));
+    dispatch(insertMessage(params));
   };
 
   const receiveMessage = (msg) => {
     console.log(msg);
-    setMessages(messages.concat(msg));
+    dispatch(receive(msg));
   };
 
   return (
@@ -35,8 +41,9 @@ const Content = ({ userId }) => {
         onMessage={(msg) => receiveMessage(msg)}
         ref={socketRef}
       />
-      <NoteBox />
-      <Detail sendToMessage={sendToMessage} userId={userId} />
+      <NoteBox userId={userId} sendToMessage={sendToMessage} />
+      {/* <NoteBox userId={userId} /> */}
+      {/* <Detail sendToMessage={sendToMessage} userId={userId} /> */}
     </Container>
   );
 };

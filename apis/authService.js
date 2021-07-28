@@ -32,20 +32,20 @@ const signin = (email, password) => {
     )
     .then((res) => {
       if (res.data.data) {
-        localStorage.setItem('access_token', JSON.stringify(res.data.data.access_token));
-        localStorage.setItem('refresh_token', JSON.stringify(res.data.data.refresh_token));
-        localStorage.setItem('user_id', JSON.stringify(res.data.data.user_id));
-        localStorage.setItem('user_grade', JSON.stringify(res.data.data.user_grade));
+        sessionStorage.setItem('access_token', JSON.stringify(res.data.data.access_token));
+        sessionStorage.setItem('refresh_token', JSON.stringify(res.data.data.refresh_token));
+        sessionStorage.setItem('user_id', JSON.stringify(res.data.data.user_id));
+        sessionStorage.setItem('user_grade', JSON.stringify(res.data.data.user_grade));
       }
       return res.data;
     });
 };
 
 const logout = () => {
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
-  localStorage.removeItem('user_id');
-  localStorage.removeItem('user_grade');
+  sessionStorage.removeItem('access_token');
+  sessionStorage.removeItem('refresh_token');
+  sessionStorage.removeItem('user_id');
+  sessionStorage.removeItem('user_grade');
 };
 
 export default { signup, signin, logout };

@@ -91,14 +91,14 @@ const Navbar = () => {
                 <li>
                   <Link to={`/mypage/profile/${user.user_id}`}>
                     <LinkClicked isActive={pathname.includes('/mypage')}>
-                      <i class="fas fa-user-circle fa-lg"></i>
+                      <i className="fas fa-user-circle fa-lg"></i>
                     </LinkClicked>
                   </Link>
                 </li>
                 <li>
                   <Link to="/note">
                     <LinkClicked isActive={pathname.includes('/note')}>
-                      <i class="far fa-bell fa-lg">{/* <span>●</span> */}</i>
+                      <i className="far fa-bell fa-lg">{/* <span>●</span> */}</i>
                     </LinkClicked>
                   </Link>
                 </li>

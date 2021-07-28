@@ -3,10 +3,10 @@ import { Container, Top } from '@components/NoteBox/Detail/styles';
 import ChatBox from '@components/NoteBox/Detail/ChatBox';
 import ChatList from '@components/NoteBox/Detail/ChatList';
 import useInput from '@hooks/useInput';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import SockJsClient from 'react-stomp';
 
-const Detail = ({ sendToMessage, userId }) => {
+const Detail = ({ sendToMessage, userId, partner, roomId, nickName }) => {
   const [chat, onChangeChat, setChat] = useInput('');
 
   const onSubmitForm = useCallback(
@@ -14,7 +14,7 @@ const Detail = ({ sendToMessage, userId }) => {
       e.preventDefault();
       console.log(chat);
       // 통신
-      sendToMessage(userId, 12, chat);
+      sendToMessage(userId, partner, roomId, chat);
       setChat('');
     },
     [userId, chat],

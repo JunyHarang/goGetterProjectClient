@@ -26,10 +26,10 @@ const SignUp = () => {
             <h2>회원가입</h2>
             <Social>
               <FaceBook>
-                <i class="fab fa-facebook-square"></i> 페이스북으로 회원가입
+                <i className="fab fa-facebook-square"></i> 페이스북으로 회원가입
               </FaceBook>
               <Google>
-                <i class="fab fa-google"></i> 구글로 회원가입
+                <i className="fab fa-google"></i> 구글로 회원가입
               </Google>
             </Social>
             <Link to="/signup2">

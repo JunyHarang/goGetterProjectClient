@@ -31,6 +31,7 @@ export const TabDiv = styled.div`
     width: 200px;
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
     padding-left: 40px;
   }
 
@@ -49,5 +50,17 @@ export const TabDiv = styled.div`
   }
 
   & li:last-child {
+  }
+`;
+
+export const LinkClicked = styled.div`
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  cursor: pointer;
+  color: ${(props) => (props.isActive ? '#ffffff' : '#000000')};
+  background-color: ${(props) => (props.isActive ? '#000' : '#fff')};
+  :hover {
+    background-color: #000000;
+    color: white;
   }
 `;

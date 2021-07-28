@@ -5,8 +5,11 @@ import { EventContainer, Container, EventHeader, EventTab, TabArea, EventList } 
 import Paging from '@components/Paging';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const NowEvent = ({ history }) => {
+const NowEvent = ({ history, props }) => {
+  const users = useSelector((state) => state.auth.user);
+  const user_grade = users.user_grade;
   const [post, setPost] = useState();
   const [totalElements, setTotalElements] = useState();
   const [currentPage, setCurrentPage] = useState(0);
@@ -32,9 +35,11 @@ const NowEvent = ({ history }) => {
         <Header />
         <Container>
           <EventHeader>이벤트</EventHeader>
-          <Link to={'/event/write'}>
-            <i className="fas fa-plus"></i>
-          </Link>
+          {user_grade === 'ADMIN' ? (
+            <Link to={'/event/write'}>
+              <i className="fas fa-plus"></i>
+            </Link>
+          ) : null}
           <EventTab>
             <li className="on">진행중인 이벤트</li>
             <li onClick={onEndEvent}>종료된 이벤트</li>

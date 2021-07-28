@@ -25,14 +25,14 @@ const Cards = (props) => {
           to={`/shareboard/detail/${props.boardId}`}
           style={{ textDecoration: 'none', color: '#000', hover: 'none' }}
         >
-          <div class="card" style={{ borderRadius: '5px' }}>
-            {/* <div class="card-header">My Card</div> */}
+          <div className="card" style={{ borderRadius: '5px' }}>
+            {/* <div className="card-header">My Card</div> */}
             <img
               style={{ borderTopLeftRadius: '5px', borderTopRightRadius: '5px', maxHeight: '250px' }}
               src="images/placeholder.png"
               alt=""
             />
-            <div class="card-body" style={{ textAlign: 'right' }}>
+            <div className="card-body" style={{ textAlign: 'right' }}>
               <Title>{title}</Title>
               <Content>
                 <BookTitle>{bookTitle}</BookTitle>

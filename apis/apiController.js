@@ -1,12 +1,11 @@
 import axios from 'axios';
 import accessTokenUpdate from '@apis/accessTokenUpdate';
 
-const access_token = JSON.parse(localStorage.getItem('access_token'));
+const access_token = JSON.parse(sessionStorage.getItem('access_token'));
 
 const instance = axios.create({
   baseURL: '/api',
   withCredentials: true,
-  timeout: 1000,
 });
 
 instance.interceptors.request.use(
@@ -27,8 +26,12 @@ instance.interceptors.response.use(
   },
   async (err) => {
     // errorController(err);
+    console.dir(err);
     const originalRequest = err.config;
-    const errorState = err.response.data.message;
+    let errorState;
+    if (err.response !== undefined) {
+      errorState = err.response.data.message;
+    }
 
     if (errorState === '엑세스토큰 불일치') {
       const { data } = await accessTokenUpdate({
@@ -36,7 +39,7 @@ instance.interceptors.response.use(
         method: 'get',
       });
 
-      localStorage.setItem('access_token', JSON.stringify(data.access_token));
+      sessionStorage.setItem('access_token', JSON.stringify(data.access_token));
       const accessToken = data.access_token;
 
       originalRequest.headers.Authorization = 'Bearer ' + accessToken;

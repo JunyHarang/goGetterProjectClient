@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const refresh_token = JSON.parse(localStorage.getItem('refresh_token'));
+const refresh_token = JSON.parse(sessionStorage.getItem('refresh_token'));
 
 const instance = axios.create({
   baseURL: '/api',

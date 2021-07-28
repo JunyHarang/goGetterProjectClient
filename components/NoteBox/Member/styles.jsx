@@ -1,11 +1,19 @@
 import styled from '@emotion/styled';
 
-export const Container = styled.div`
+export const Container = styled.button`
   width: 100%;
   height: 70px;
   padding: 15px;
   color: #939597;
+  background-color: #fff;
   cursor: pointer;
+  border: 0;
+  outline: 0;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 `;
 
 export const Top = styled.div`
@@ -19,6 +27,7 @@ export const Top = styled.div`
     font-weight: bold;
     margin: 0;
     color: #222;
+    text-align: left;
   }
 
   & span {

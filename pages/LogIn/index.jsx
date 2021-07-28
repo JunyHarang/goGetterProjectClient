@@ -99,10 +99,10 @@ const LogIn = (props) => {
           </Search>
           <Social>
             <FaceBook>
-              <i class="fab fa-facebook-square"></i> 페이스북으로 시작하기
+              <i className="fab fa-facebook-square"></i> 페이스북으로 시작하기
             </FaceBook>
             <Google>
-              <i class="fab fa-google"></i> 구글로 시작하기
+              <i className="fab fa-google"></i> 구글로 시작하기
             </Google>
           </Social>
         </LoginDiv>

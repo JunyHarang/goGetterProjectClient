@@ -45,9 +45,9 @@ const Admin = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data.content);
         const data = res.data.data.content;
         setPost(data);
+        // console.log(data);
         setTotalElements(res.data.pagination.total_elements);
         setCurrentPage(res.data.pagination.current_page);
       });
@@ -151,6 +151,11 @@ const MemberList = ({ item, setDeleteModalOpen, setUserId, history, formatPhoneN
 
   const [select, setSelect] = useState();
   const [selectValue, setSelectValue] = useState();
+  let phoneNum;
+
+  if (phone_number) {
+    phoneNum = formatPhoneNumber(phone_number);
+  }
 
   const onClickDelete = useCallback((e) => {
     e.preventDefault();
@@ -161,7 +166,6 @@ const MemberList = ({ item, setDeleteModalOpen, setUserId, history, formatPhoneN
   const handleChange = useCallback(
     (e) => {
       const { value } = e.target;
-      console.log(value);
       e.preventDefault();
       let params = { user_grade: value };
       apiController({
@@ -197,7 +201,7 @@ const MemberList = ({ item, setDeleteModalOpen, setUserId, history, formatPhoneN
         <td>{email}</td>
         <td>{name}</td>
         <td>{nick_name}</td>
-        <td>{formatPhoneNumber(phone_number)}</td>
+        <td>{phoneNum}</td>
         <td>{created_at}</td>
         {user_grade === 'USER' ? (
           <td>

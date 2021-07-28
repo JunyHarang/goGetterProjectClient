@@ -16,11 +16,13 @@ import Paging from '@components/Paging';
 import EditModal from '@components/Modal/EventEdit';
 import EventDelete from '@components/Modal/EventDelete';
 import axios from 'axios';
-import { Link, useSelector } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const EventDetail = (props) => {
+  const users = useSelector((state) => state.auth.user);
+  const user_grade = users.user_grade;
   const eventId = props.match.params.id;
-  // const state = useSelector((state) => state.auth.user);
 
   const [post, setPost] = useState([]);
   const [totalElements, setTotalElements] = useState();
@@ -97,12 +99,14 @@ const EventDetail = (props) => {
         <Header />
         <Container>
           <EventHeader>이벤트</EventHeader>
-          <EditBtn>
-            <i className="far fa-edit" onClick={onClickEditBtn} setEditModalOpen={setEditModalOpen}></i>
-            <button className="delete" onClick={onClickDeleteBtn} setDeleteModalOpen={setDeleteModalOpen}>
-              &times;
-            </button>
-          </EditBtn>
+          {user_grade === 'ADMIN' ? (
+            <EditBtn>
+              <i className="far fa-edit" onClick={onClickEditBtn} setEditModalOpen={setEditModalOpen}></i>
+              <button className="delete" onClick={onClickDeleteBtn} setDeleteModalOpen={setDeleteModalOpen}>
+                &times;
+              </button>
+            </EditBtn>
+          ) : null}
           <Contents>
             <h3>{title}</h3>
             {content}

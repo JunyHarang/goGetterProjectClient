@@ -1,30 +1,30 @@
 import React from 'react';
-import loadable from '@loadable/component';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Auth from '../../hoc/auth';
 import ScrollToTop from '../../utils/scrollToTop';
 
-const Main = loadable(() => import('@pages/Main'));
-const LogIn = loadable(() => import('@pages/LogIn'));
-const SignUp = loadable(() => import('@pages/SignUp'));
-const SignUp2 = loadable(() => import('@pages/SignUp/SignUp2'));
-const MyBookRecord = loadable(() => import('@pages/MyBookRecord'));
-const BRWrite = loadable(() => import('@pages/MyBookRecord/BRWrite'));
-const BRContent = loadable(() => import('@pages/MyBookRecord/BRContent'));
-const Discussion = loadable(() => import('@pages/Discussion'));
-const DCContent = loadable(() => import('@pages/Discussion/DCContent'));
-const DCEdit = loadable(() => import('@pages/Discussion/DCEdit'));
-const DCWrite = loadable(() => import('@pages/Discussion/DCWrite'));
-const MyPageProfile = loadable(() => import('@pages/MyPage/Profile'));
-const ShareBoard = loadable(() => import('@pages/ShareBoard'));
-const ShareBoardWrite = loadable(() => import('@pages/ShareBoard/Write'));
-const ShareDetail = loadable(() => import('@pages/ShareBoard/ShareDetail'));
-const Note = loadable(() => import('@pages/Note'));
-const Event = loadable(() => import('@pages/Event/Now'));
-const EventDetail = loadable(() => import('@pages/Event/Detail'));
-const EventEnd = loadable(() => import('@pages/Event/End'));
-const EventWrite = loadable(() => import('@pages/Event/Write'));
-const Admin = loadable(() => import('@pages/Admin'));
+import Main from '@pages/Main';
+import LogIn from '@pages/LogIn';
+import SignUp from '@pages/SignUp';
+import SignUp2 from '@pages/SignUp/SignUp2';
+import MyBookRecord from '@pages/MyBookRecord';
+import BRWrite from '@pages/MyBookRecord/BRWrite';
+import BRContent from '@pages/MyBookRecord/BRContent';
+import Discussion from '@pages/Discussion';
+import DCContent from '@pages/Discussion/DCContent';
+import DCEdit from '@pages/Discussion/DCEdit';
+import DCWrite from '@pages/Discussion/DCWrite';
+import MyPageProfile from '@pages/MyPage/Profile';
+import ShareBoard from '@pages/ShareBoard';
+import ShareBoardWrite from '@pages/ShareBoard/Write';
+import ShareDetail from '@pages/ShareBoard/ShareDetail';
+import Note from '@pages/Note';
+import Event from '@pages/Event/Now';
+import EventDetail from '@pages/Event/Detail';
+import EventEnd from '@pages/Event/End';
+import EventWrite from '@pages/Event/Write';
+import Admin from '@pages/Admin';
+import Monthly from '@pages/Admin/Monthly';
 
 const App = () => {
   return (
@@ -52,6 +52,7 @@ const App = () => {
           <Route path="/event/end" component={EventEnd} />
           <Route path="/note" component={Note} />
           <Route path="/mypage/profile" component={Auth(MyPageProfile, 'USER')} />
+          <Route path="/admin/monthly" component={Auth(Monthly, 'ADMIN')} />
           <Route path="/admin" component={Auth(Admin, 'ADMIN')} />
         </Switch>
       </ScrollToTop>

@@ -10,11 +10,11 @@ import {
 } from '../actions/type';
 
 const user = {
-  user_id: JSON.parse(localStorage.getItem('user_id')),
-  user_grade: JSON.parse(localStorage.getItem('user_grade')),
+  user_id: JSON.parse(sessionStorage.getItem('user_id')),
+  user_grade: JSON.parse(sessionStorage.getItem('user_grade')),
 };
 
-const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
+const initialState = user.user_id ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
